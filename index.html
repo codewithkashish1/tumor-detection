@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Tumor Detection System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-brain"></i>
+                <span>Tumor Vision</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link active" data-section="home">Home</a>
+                <a href="#upload" class="nav-link" data-section="upload">Upload Scan</a>
+                <a href="#history" class="nav-link" data-section="history">History</a>
+                <a href="#login" class="nav-link" data-section="login" id="auth-link">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="main-container">
+        
+        <!-- Home Section: Landing page with features -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1>Advanced Brain Tumor Detection</h1>
+                <p>Upload MRI brain scans and get instant AI-powered analysis with high accuracy tumor detection.</p>
+                <button class="btn-primary" onclick="showSection('upload')">Start Analysis</button>
+            </div>
+            
+            <!-- Features showcase -->
+            <div class="features">
+                <div class="feature-card">
+                    <i class="fas fa-upload"></i>
+                    <h3>Easy Upload</h3>
+                    <p>Drag and drop MRI scans in various formats. Secure file handling with encryption.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>AI Analysis</h3>
+                    <p>Advanced CNN models trained on medical datasets with ≥85% accuracy rate.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure & Private</h3>
+                    <p>HIPAA-compliant storage with end-to-end encryption and user data protection.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login/Register Section: User authentication -->
+        <section id="login" class="section">
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="tab-btn active" onclick="switchTab('signin')">Sign In</button>
+                    <button class="tab-btn" onclick="switchTab('signup')">Sign Up</button>
+                </div>
+                
+                <!-- Sign In Form -->
+                <form id="signin-form" class="auth-form active">
+                    <h2>Welcome Back</h2>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="signin-email" required placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="signin-password" required placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="btn-primary">Sign In</button>
+                </form>
+
+                <!-- Sign Up Form -->
+                <form id="signup-form" class="auth-form">
+                    <h2>Create Account</h2>
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="signup-name" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="signup-email" required placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="signup-password" required placeholder="Create a password" minlength="6">
+                    </div>
+                    <button type="submit" class="btn-primary">Create Account</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Upload Section: MRI scan upload and analysis -->
+        <section id="upload" class="section">
+            <div class="upload-container">
+                <h2>Upload MRI Scan</h2>
+                <p>Upload a brain MRI scan for AI-powered tumor detection analysis</p>
+                
+                <!-- File upload area with drag and drop -->
+                <div class="upload-area" id="upload-area">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Drag & drop an MRI scan here, or click to select</p>
+                    <p class="upload-hint">Supports: PNG, JPG, JPEG, GIF, BMP, TIFF</p>
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                </div>
+
+                <!-- Upload progress indicator -->
+                <div class="upload-progress" id="upload-progress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <p id="progress-text">Uploading... 0%</p>
+                </div>
+
+                <!-- Analysis results display -->
+                <div class="results-container" id="results-container" style="display: none;">
+                    <div class="result-header">
+                        <i class="fas fa-check-circle" id="result-icon"></i>
+                        <h3 id="result-title">Analysis Complete</h3>
+                    </div>
+                    <div class="result-content">
+                        <div class="confidence-score">
+                            <span id="confidence-percentage">92.5%</span>
+                            <span>Confidence Score</span>
+                        </div>
+                        <div class="result-details">
+                            <p id="result-description">No signs of tumor detected. Brain structure appears normal.</p>
+                        </div>
+                        <div class="result-actions">
+                            <button class="btn-secondary" onclick="resetUpload()">Analyze Another Scan</button>
+                            <button class="btn-primary" onclick="showSection('history')">View History</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section: Previous scans and results -->
+        <section id="history" class="section">
+            <div class="history-container">
+                <h2>Scan History</h2>
+                <p>View and manage your uploaded brain scans and analysis results.</p>
+                
+                <!-- History list will be populated by JavaScript -->
+                <div class="history-list" id="history-list">
+                    <!-- Sample history item for demonstration -->
+                    <div class="history-item">
+                        <div class="history-info">
+                            <div class="file-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="file-details">
+                                <h4>brain_scan_001.jpg</h4>
+                                <p>Uploaded on March 15, 2024 • 2.1 MB</p>
+                            </div>
+                        </div>
+                        <div class="history-result">
+                            <span class="status-badge no-tumor">No Tumor</span>
+                            <span class="confidence">95.2% confidence</span>
+                        </div>
+                        <div class="history-actions">
+                            <button class="btn-icon" title="View Details">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-icon" title="Download">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Loading overlay for async operations -->
+    <div class="loading-overlay" id="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Processing your request...</p>
+    </div>
+
+    <!-- Toast notifications for user feedback -->
+    <div class="toast" id="toast"></div>
+
+    <!-- JavaScript files -->
+    <script src="auth.js"></script>
+    <script src="upload.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
