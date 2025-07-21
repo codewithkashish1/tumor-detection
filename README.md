@@ -1,4 +1,4 @@
-# Welcome to your Lovable project
+# Welcome to tumor detection project
 
 ## Project info
 
